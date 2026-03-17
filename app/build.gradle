@@ -19,7 +19,7 @@ android {
     
  signingConfigs {
         release {
-            storeFile file('keystore/github.jks')
+            storeFile file('../keystore/github.jks')
             storePassword storePassword 
             keyAlias keyAlias          
             keyPassword keyPassword       
