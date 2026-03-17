@@ -1,10 +1,17 @@
 name: Build APK
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+ workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'release'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - debug
+     
 
 jobs:
   build:
