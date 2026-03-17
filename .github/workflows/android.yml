@@ -37,12 +37,28 @@ jobs:
 
     - name: Setup signing configuration
       run: |
+    
+       if [ -z "${{ secrets.KEYSTORE_PASSWORD }}" ]; then
+       echo "ERROR: KEYSTORE_PASSWORD secret is empty!"
+         exit 1
+       fi
+       if [ -z "${{ secrets.KEY_ALIAS }}" ]; then
+       echo "ERROR: KEY_ALIAS secret is empty!"
+         exit 1
+       fi
+       if [ -z "${{ secrets.KEY_PASSWORD }}" ]; then
+       echo "ERROR: KEY_PASSWORD secret is empty!"
+         exit 1
+       fi
+
        printf "storePassword=%s\n" "${{ secrets.KEYSTORE_PASSWORD }}" > gradle.properties
        printf "keyAlias=%s\n" "${{ secrets.KEY_ALIAS }}" >> gradle.properties
        printf "keyPassword=%s\n" "${{ secrets.KEY_PASSWORD }}" >> gradle.properties
        printf "android.useAndroidX=true\n" >> gradle.properties
-       echo "Generated gradle.properties:"
+  
+       echo "=== GENERATED GRADLE.PROPERTIES ==="
        cat gradle.properties
+       echo "=================================="
 
     - name: Verify Gradle properties
       run: |
