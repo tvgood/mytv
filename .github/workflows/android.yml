@@ -26,10 +26,10 @@ jobs:
         
     - name: Create keystore.properties
       run: |
-       echo "storeFile=keystore-repo/github.jks" > keystore-repo/keystore.properties
-       echo "storePassword= $ {{ secrets.KEYSTORE_PASSWORD }}" >> keystore-repo/keystore.properties
-       echo "keyAlias= $ {{ secrets.KEY_ALIAS }}" >> keystore-repo/keystore.properties
-       echo "keyPassword= $ {{ secrets.KEY_PASSWORD }}" >> keystore-repo/keystore.properties
+       echo "storeFile=tvgood/keystore-repo/github.jks" > tvgood/keystore-repo/keystore.properties
+       echo "storePassword= $ {{ secrets.KEYSTORE_PASSWORD }}" >> tvgood/keystore-repo/keystore.properties
+       echo "keyAlias= $ {{ secrets.KEY_ALIAS }}" >> tvgood/keystore-repo/keystore.properties
+       echo "keyPassword= $ {{ secrets.KEY_PASSWORD }}" >> tvgood/keystore-repo/keystore.properties
        mkdir -p keystore
        
     - name: Set executable permission for gradlew
