@@ -59,7 +59,8 @@ jobs:
 
     - name: Fix build.gradle path
       run: |
-        sed -i 's|storeFile file(\'keystore/github.jks\)|storeFile file(\'../keystore/github.jks\)|g' app/build.gradle
+        sed -i "s|storeFile file('keystore/github.jks')|storeFile file('../keystore/github.jks')|g" app/build.gradle
+        echo "Updated build.gradle:"
         cat app/build.gradle | grep storeFile
 
     - name: Build with Gradle
