@@ -20,7 +20,7 @@ jobs:
     - name: Checkout Android Keystore
       uses: actions/checkout@v2
       with:
-        repository: your-username/keystore-repo
+        repository: tvgood/mytv/key/mytv.jks
         token: ${{ secrets.TOKEN }}
         path: keystore
         
