@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 全屏+常亮设置
+        
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
         new Thread(() -> {
             try {
-                // 调用 Radio APP 的同步解析逻辑
+               
                 List<ChannelGroup> data = PlaylistParser.syncFetchList(URL);
 
                 if (data != null && !data.isEmpty()) {
@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                // 建议这里弹个 Toast 提示网络错误
+               
             }
         }).start();
     }
