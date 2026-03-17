@@ -15,7 +15,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi-v7a"
-        }
+        }}
+    
  signingConfigs {
         release {
             storeFile file('keystore/github.jks')
@@ -23,8 +24,7 @@ android {
             keyAlias "${{ secrets.KEY_ALIAS }}"
             keyPassword "${{ secrets.KEY_PASSWORD }}"
         }
-        
-    } }
+    } 
 
     buildTypes {
         release {
