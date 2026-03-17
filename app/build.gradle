@@ -20,9 +20,9 @@ android {
  signingConfigs {
         release {
             storeFile file('keystore/github.jks')
-            storePassword "${{ secrets.KEYSTORE_PASSWORD }}"
-            keyAlias "${{ secrets.KEY_ALIAS }}"
-            keyPassword "${{ secrets.KEY_PASSWORD }}"
+            storePassword storePassword 
+            keyAlias keyAlias          
+            keyPassword keyPassword       
         }
     } 
 
