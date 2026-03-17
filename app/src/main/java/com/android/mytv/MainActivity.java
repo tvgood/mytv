@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         mListChannel.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-                    mListGroup.requestFocus(); // 向左移回分组，频道颜色由系统自动恢复
+                    mListGroup.requestFocus(); 
                     return true;
                 }
             }
