@@ -16,10 +16,19 @@ android {
         ndk {
             abiFilters "armeabi-v7a"
         }
-    }
+ signingConfigs {
+        release {
+            storeFile file('keystore/github.jks')
+            storePassword "${{ secrets.KEYSTORE_PASSWORD }}"
+            keyAlias "${{ secrets.KEY_ALIAS }}"
+            keyPassword "${{ secrets.KEY_PASSWORD }}"
+        }
+        
+    } }
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
