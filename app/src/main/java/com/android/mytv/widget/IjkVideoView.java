@@ -16,9 +16,9 @@ public class IjkVideoView extends FrameLayout {
     private IjkMediaPlayer mMediaPlayer = null;
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
-    // 1. 修复监听器接口：使用 IJKPlayer 的 IMediaPlayer 类型
+  
     public interface OnPreparedListener {
-        void onPrepared(IMediaPlayer mp); // 使用 IMediaPlayer 而不是 MediaPlayer
+        void onPrepared(IMediaPlayer mp); 
     }
 
     private OnPreparedListener mPreparedListener;
@@ -52,27 +52,24 @@ public class IjkVideoView extends FrameLayout {
         release();
         try {
             mMediaPlayer = new IjkMediaPlayer();
-
-            // 1. 基础配置（移除冗余项）
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", 300); // 5分钟缓存
+            
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", 300); 
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "safe", 0);
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-fps", 30);
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "subtitle", 1);
 
-// 2. H265 专用核心参数（关键！）
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max_cached_duration", 90); // 90秒直播缓存
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "buffer_size", 1024 * 1024 * 50); // 50MB (H265 必须)
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "max-buffer-size", 1024 * 1024 * 200); // 200MB
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 10000000); // 10秒超时
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max_cached_duration", 90); 
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "buffer_size", 1024 * 1024 * 50); 
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "max-buffer-size", 1024 * 1024 * 200); 
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 10000000); 
 
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "av-sync", 1); // 启用自动音视频同步
-// 3. 动态强制格式 + UA/Referer（解决无后缀源 + 服务器校验）
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "av-sync", 1); 
+
             if (path.startsWith("http://") || path.startsWith("https://")) {
-                // 关键：强制 HLS + 添加浏览器 UA 和 Referer
+               
                 mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "format", "hls");
                 mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
-
-                // 添加浏览器 UA 和 Referer（必须！）
+              
                 mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-user-agent",
                         "Mozilla/5.0 (Linux; Android 10; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Mobile Safari/537.36");
 
@@ -80,12 +77,10 @@ public class IjkVideoView extends FrameLayout {
                 mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "format", "flv");
             }
 
-// 4. 协议白名单（保留原有）
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "protocol_whitelist",
                     "ijkio,ffio,async,cache,crypto,file,dash,http,https,ijkhttphook,ijkinject,ijklivehook,ijklongurl,ijksegment,ijktcphook,pipe,rtp,tcp,tls,udp,ijkurlhook,data");
 
-// 5. H265 专用解码（关闭硬件解码！）
-            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1); // 关键修复！
+            mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1); 
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 0);
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-handle-resolution-change", 0);
             mMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", IjkMediaPlayer.SDL_FCC_RV32);
@@ -93,14 +88,14 @@ public class IjkVideoView extends FrameLayout {
             mMediaPlayer.setDataSource(path);
             if (mSurfaceHolder != null) mMediaPlayer.setDisplay(mSurfaceHolder);
 
-            // 2. 修复：使用 IJKPlayer 的 IMediaPlayer.OnPreparedListener 类型
+        
             mMediaPlayer.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(IMediaPlayer mp) {
                     if (mPreparedListener != null) {
                         mPreparedListener.onPrepared(mp);
                     } else {
-                        mp.start(); // 保留原有自动播放
+                        mp.start(); 
                     }
                 }
             });
